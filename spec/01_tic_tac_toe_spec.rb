@@ -213,3 +213,64 @@ describe './lib/tic_tac_toe.rb' do
     end
   end
 end
+
+# how many turns have been played
+def turn_count(board)
+  counter = 0
+  board.each do |position|
+    if position == "X" || position == "O"
+      counter += 1
+    end
+  end
+   return counter
+end
+
+# current player
+def current_player(board)
+  if turn_count(board) % 2 == 0
+    return "X"
+    else
+    return "O"
+  end
+
+end
+
+#has anyone won yet?
+def won?(board)
+  WIN_COMBINATIONS.each do |win_combination|
+    position_1 = board[win_combination[0]]
+    position_2 = board[win_combination[1]]
+    position_3 = board[win_combination[2]]
+    if position_1 == position_2 && position_2 == position_3 && !(position_1 == " ")
+      return win_combination
+
+    end
+
+  end
+return false
+end
+
+# is the board full?
+def full?(board)
+ !board.any?{|i| i == " "}
+end
+
+# is the game a draw?
+def draw?(board)
+  full?(board) && !won?(board)
+end
+
+# is the game over?
+def over?(board)
+  draw?(board) || won?(board)
+end
+
+# who is the winner?
+def winner(board)
+  if won?(board)
+    return board[won?(board)[0]]
+
+  end
+
+end
+
